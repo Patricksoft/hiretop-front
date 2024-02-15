@@ -1,0 +1,144 @@
+<div [ngSwitch]="pos">
+  <div *ngSwitchCase="0">
+    <div class="row"
+         *ngIf="helperServiceFront.positionProcessApplyStatus(offer.applies[0]['process_apply']!=null ?  offer.applies[0]['process_apply']['step'] : null)>=1">
+      <div *ngIf="offer.applies[0]['process_apply']!=null">
+        <div class="title-case"> Présélection
+          : {{offer.applies[0]['process_apply']['preselection_at'] | date:'d/M/Y à HH:mm'}} </div>
+        <h6 class="mt-2">Message du recruteur</h6>
+        <div [innerHTML]="offer.applies[0]['process_apply']['preselection_msg']"></div>
+        <h6 class="mt-2">Proposition horaire</h6>
+        <ul>
+          <li *ngFor="let item of offer.applies[0]['process_apply']['selection_interview_planning']">{{item | date:'d/M/Y à HH:mm'}}</li>
+        </ul>
+        <hr>
+      </div>
+      <div *ngIf="offer.applies[0]['process_apply']['selection_interview_planning_selected']!=null">
+        <h6 class="mt-2">Horaire sélectionné pour l'entretien</h6>
+        {{offer.applies[0]['process_apply']['selection_interview_planning_selected'] | date:'d/M/Y à HH:mm'}}
+        <hr>
+      </div>
+      <div *ngIf="offer.applies[0]['process_apply']['selection_decision']!=null">
+        <div *ngIf="offer.applies[0]['process_apply']['selection_decision']=='accepted'">
+          <nz-alert nzType="success" nzMessage="Sélection : candidature sélectionné
+            - {{offer.applies[0]['process_apply']['selection_at'] | date:'d/M/Y à HH:mm'}}"></nz-alert>
+        </div>
+        <div *ngIf="offer.applies[0]['process_apply']['selection_decision']=='refused'">
+          <nz-alert nzType="error" nzMessage="Sélection : candidature refusé"></nz-alert>
+          <h6 class="mt-2">Message du recruteur</h6>
+          <div [innerHTML]="offer.applies[0]['process_apply']['selection_msg']"></div>
+        </div>
+
+        <hr>
+      </div>
+
+    </div>
+  </div>
+  <div *ngSwitchCase="1">
+    <div class="row"
+         *ngIf="helperServiceFront.positionProcessApplyStatus(offer.applies[0]['process_apply']!=null ?  offer.applies[0]['process_apply']['step'] : null)>=2">
+      <div *ngIf="offer.applies[0]['process_apply']!=null">
+
+        <h6 class="mt-2">Message du recruteur</h6>
+        <div [innerHTML]="offer.applies[0]['process_apply']['selection_msg']"></div>
+        <h6 class="mt-2">Proposition horaire</h6>
+        <ul>
+          <li
+            *ngFor="let item of offer.applies[0]['process_apply']['competency_interview_planning']">{{item | date:'d/M/Y à HH:mm'}}</li>
+        </ul>
+        <hr>
+      </div>
+      <div *ngIf="offer.applies[0]['process_apply']['competency_interview_planning_selected']!=null">
+        <h6 class="mt-2">Horaire sélectionné pour l'entretien</h6>
+        {{offer.applies[0]['process_apply']['competency_interview_planning_selected'] | date:'d/M/Y à HH:mm'}}
+        <hr>
+      </div>
+      <div *ngIf="offer.applies[0]['process_apply']['competency_interview_decision']!=null">
+        <div *ngIf="offer.applies[0]['process_apply']['competency_interview_decision']=='accepted'">
+          <nz-alert nzType="success" nzMessage="Résultat : candidature retenu après l'entretien de compétence
+            - {{offer.applies[0]['process_apply']['competency_interview_at'] | date:'d/M/Y à HH:mm'}}"></nz-alert>
+        </div>
+        <div *ngIf="offer.applies[0]['process_apply']['competency_interview_decision']=='refused'">
+          <nz-alert nzType="error" nzMessage="Résultat : candidature refusé"></nz-alert>
+          <h6 class="mt-2">Message du recruteur</h6>
+          <div [innerHTML]="offer.applies[0]['process_apply']['competency_interview_msg']"></div>
+        </div>
+
+        <hr>
+      </div>
+
+    </div>
+  </div>
+  <div *ngSwitchCase="2">
+    <div class="row"
+         *ngIf="helperServiceFront.positionProcessApplyStatus(offer.applies[0]['process_apply']!=null ?  offer.applies[0]['process_apply']['step'] : null)>=3">
+      <div *ngIf="offer.applies[0]['process_apply']!=null">
+
+        <h6 class="mt-2">Message du recruteur</h6>
+        <div [innerHTML]="offer.applies[0]['process_apply']['competency_interview_msg']"></div>
+        <hr>
+      </div>
+
+      <div *ngIf="offer.applies[0]['process_apply']['reference_checking_decision']!=null">
+        <div *ngIf="offer.applies[0]['process_apply']['reference_checking_decision']=='accepted'">
+          <nz-alert nzType="success" nzMessage="Résultat : candidature retenu après vérification de référence
+            - {{offer.applies[0]['process_apply']['reference_checking_at'] | date:'d/M/Y à HH:mm'}}"></nz-alert>
+        </div>
+        <div *ngIf="offer.applies[0]['process_apply']['reference_checking_decision']=='refused'">
+          <nz-alert nzType="error" nzMessage="Résultat : candidature refusé"></nz-alert>
+          <h6 class="mt-2">Message du recruteur</h6>
+          <div [innerHTML]="offer.applies[0]['process_apply']['reference_checking_msg']"></div>
+        </div>
+
+        <hr>
+      </div>
+
+    </div>
+  </div>
+  <div *ngSwitchCase="3">
+    <div class="row"
+         *ngIf="helperServiceFront.positionProcessApplyStatus(offer.applies[0]['process_apply']!=null ?  offer.applies[0]['process_apply']['step'] : null)>=4">
+      <div *ngIf="offer.applies[0]['process_apply']!=null">
+
+        <h6 class="mt-2">Proposition d'offre d'emploi</h6>
+        <div [innerHTML]="offer.applies[0]['process_apply']['reference_checking_msg']"></div>
+        <hr>
+      </div>
+      <div *ngIf="offer.applies[0]['process_apply']['job_offer_decision']!=null">
+        <div *ngIf="offer.applies[0]['process_apply']['job_offer_decision']=='accepted'">
+          <nz-alert nzType="success" nzMessage="Résultat : offre d'emploi accepté
+            - {{offer.applies[0]['process_apply']['job_offer_at'] | date:'d/M/Y à HH:mm'}}"></nz-alert>
+        </div>
+        <div *ngIf="offer.applies[0]['process_apply']['job_offer_decision']=='refused'">
+          <nz-alert nzType="error" nzMessage="Résultat : candidature refusé"></nz-alert>
+        </div>
+        <h6 class="mt-2">Message du candidat</h6>
+        <div [innerHTML]="offer.applies[0]['process_apply']['job_offer_msg']"></div>
+
+        <hr>
+      </div>
+
+    </div>
+  </div>
+  <div *ngSwitchCase="4">
+    <div class="row"
+         *ngIf="helperServiceFront.positionProcessApplyStatus(offer.applies[0]['process_apply']!=null ?  offer.applies[0]['process_apply']['step'] : null)>=5">
+
+      <div *ngIf="offer.applies[0]['process_apply']['final_decision_decision']!=null">
+        <div *ngIf="offer.applies[0]['process_apply']['final_decision_decision']=='accepted'">
+          <nz-alert nzType="success" nzMessage="Résultat : Embauché
+            - {{offer.applies[0]['process_apply']['final_decision_at'] | date:'d/M/Y à HH:mm'}}"></nz-alert>
+        </div>
+        <div *ngIf="offer.applies[0]['process_apply']['final_decision_decision']=='refused'">
+          <nz-alert nzType="error" nzMessage="Résultat : candidature refusé"></nz-alert>
+        </div>
+        <h6 class="mt-2">Message du recrutement</h6>
+        <div [innerHTML]="offer.applies[0]['process_apply']['final_decision_msg']"></div>
+
+        <hr>
+      </div>
+
+    </div>
+  </div>
+
+</div>

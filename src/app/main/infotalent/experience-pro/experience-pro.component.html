@@ -1,0 +1,168 @@
+<div class="col-md-12" >
+  <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning">
+    <div class="col-12" style="text-align: right">
+      <button nz-button nzType="primary" nzShape="circle" (click)="this.isModalSave=true;initForm();">
+        <span nz-icon nzType="plus" nzTheme="outline"></span>
+      </button>
+      <nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720"
+                 [nzVisible]="isModalSave" nzTitle="{{modalTitle}}"
+                 (nzOnClose)="closeModal()">
+        <form nz-form *nzDrawerContent [formGroup]="validateForm" (submit)="submitForm()">
+          <div style="text-align: left" class="row">
+            <div class="col-md-12">
+              <nz-form-label nzFor="label">Intitulé du poste</nz-form-label>
+              <nz-form-control>
+                <nz-input-group>
+                  <input type="text" nz-input formControlName="label"/>
+                </nz-input-group>
+              </nz-form-control>
+            </div>
+            <div class="col-md-12">
+              <nz-form-label nzFor="company">Entreprise</nz-form-label>
+              <nz-form-control>
+                <nz-input-group>
+                  <input type="text" nz-input formControlName="company"/>
+                </nz-input-group>
+              </nz-form-control>
+            </div>
+            <div class="col-md-12">
+              <nz-form-label nzFor="begin">Date de début</nz-form-label>
+              <nz-form-control>
+                <nz-input-group>
+                  <input type="date" nz-input formControlName="begin"/>
+                </nz-input-group>
+              </nz-form-control>
+            </div>
+            <div class="col-md-12">
+              <nz-form-label nzFor="end">Date de fin</nz-form-label>
+              <nz-form-control>
+                <nz-input-group>
+                  <input type="date" nz-input formControlName="end"/>
+                </nz-input-group>
+              </nz-form-control>
+            </div>
+
+            <div class="col-md-12">
+              <nz-form-label nzFor="sector_id">Secteur</nz-form-label>
+              <nz-form-control>
+                <nz-select formControlName="sector_id">
+                  <nz-option *ngFor="let item of sectors" nzValue="{{item.id}}" nzLabel="{{item.name}}"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </div>
+
+            <div class="col-md-12">
+              <nz-form-label nzFor="type_work">Type d'emploi</nz-form-label>
+              <nz-form-control>
+                <nz-select formControlName="type_work">
+                  <nz-option nzValue="full_time" nzLabel="Temps plein"></nz-option>
+                  <nz-option nzValue="part_time" nzLabel="Temps partiel"></nz-option>
+                  <nz-option nzValue="independent" nzLabel="Indépendant"></nz-option>
+                  <nz-option nzValue="freelance" nzLabel="Freelance"></nz-option>
+                  <nz-option nzValue="cdd" nzLabel="CDD"></nz-option>
+                  <nz-option nzValue="cdi" nzLabel="CDI"></nz-option>
+                  <nz-option nzValue="internship" nzLabel="Stage"></nz-option>
+                  <nz-option nzValue="study_contract" nzLabel="Contrat en alternance"></nz-option>
+                  <nz-option nzValue="seasonal" nzLabel="Saisonnier"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </div>
+
+            <div class="col-md-12">
+              <nz-form-label nzFor="type_location">Type de lieu</nz-form-label>
+              <nz-form-control>
+                <nz-select formControlName="type_location">
+                  <nz-option nzValue="on_site" nzLabel="Sur site"></nz-option>
+                  <nz-option nzValue="afar" nzLabel="À distance"></nz-option>
+                  <nz-option nzValue="hybrid" nzLabel="Hybride"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </div>
+
+            <div class="col-md-12">
+              <nz-form-label nzFor="region_id">Pays</nz-form-label>
+              <nz-form-control>
+                <nz-select formControlName="region_id">
+                  <nz-option *ngFor="let item of countries" nzValue="{{item.id}}" nzLabel="{{item.name}}"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </div>
+
+            <div class="col-md-12">
+              <nz-form-label nzFor="description">Description</nz-form-label>
+              <nz-form-control>
+                <nz-input-group>
+                  <textarea rows="4" nz-input formControlName="description"></textarea>
+                </nz-input-group>
+              </nz-form-control>
+            </div>
+
+
+            <div class="col-md-12">
+              <nz-form-control>
+                <label nz-checkbox formControlName="current_post">J’occupe actuellement ce poste</label>
+              </nz-form-control>
+            </div>
+
+
+
+          </div>
+          <div class="mt-4">
+            <button nz-button class="login-form-button login-form-margin col-md-4"
+                    [disabled]="!validateForm.valid"
+                    [nzType]="'primary'" style="margin-right: 2%">
+              Enregistrer
+            </button>
+          </div>
+        </form>
+        <!-- <ng-template #footerTpl>
+           <div style="text-align: right">
+             <button nz-button nzType="primary" (click)="closeModal()">Fermer</button>
+           </div>
+         </ng-template>-->
+      </nz-drawer>
+    </div>
+
+
+    <div>
+      <nz-list class="demo-loadmore-list">
+        <nz-list-item *ngFor="let item of experiences">
+          <ng-container>
+            <nz-list-item-meta
+              nzDescription="{{ item.begin }} à {{ item.end }}"
+            >
+              <nz-list-item-meta-title>
+                <a href="javascript:void(0)" class="text-primary">{{ item.label }}</a> <br>
+                <a href="javascript:void(0)"  style="font-weight: bold">{{item.region.name}}, {{ helperServiceFront.labelTypeWork(item.type_work) }}, {{ helperServiceFront.labelTypeLocation(item.type_location) }}</a>
+                <div style="font-weight: bold">
+                  {{ item.company }} - {{ item.sector.name }}
+                </div>
+                <div style="text-align: justify">
+                  {{ item.description }}
+                </div>
+              </nz-list-item-meta-title>
+
+            </nz-list-item-meta>
+            <ul nz-list-item-actions>
+              <nz-list-item-action><a href="javascript:void(0)" (click)="editUserDegree(item)">
+                <span nz-icon nzType="edit" nzTheme="outline"></span>
+              </a></nz-list-item-action>
+              <nz-list-item-action><a href="javascript:void(0)" (click)="deleteUserDegree(item)">
+                <span nz-icon nzType="delete" nzTheme="outline"></span>
+              </a></nz-list-item-action>
+            </ul>
+          </ng-container>
+
+          <nz-skeleton
+            *ngIf="item.loading"
+            [nzActive]="true"
+            [nzTitle]="false"
+            [nzLoading]="true"
+          ></nz-skeleton>
+        </nz-list-item>
+
+      </nz-list>
+    </div>
+
+  </nz-spin>
+</div>

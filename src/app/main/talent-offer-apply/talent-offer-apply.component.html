@@ -1,0 +1,204 @@
+<div class="col-md-12">
+  <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning">
+
+    <div *ngIf="offers">
+      <h5>Mes candidatures</h5>
+      <div *ngIf="offers.data.length>0">
+        <div class="row">
+          <nz-list class="demo-loadmore-list">
+            <nz-list-item *ngFor="let item of offers.data"
+                          (click)="showDetail(item)"
+                          style="cursor: pointer;">
+              <ng-container>
+                <img src="{{storage_link+item.company.logo}}" alt="" width="40"
+                     style="margin-right: 10px; border-radius: 50%">
+                <nz-list-item-meta
+                  nzDescription="{{ item.company.name }}"
+                >
+                  <nz-list-item-meta-title>
+
+                    <a href="javascript:void(0)" class="text-primary">{{ item.label }}</a>
+                    <br>
+                    <a href="javascript:void(0)"
+                       style="font-weight: bold">{{ item.country.name }}
+                      , {{ helperServiceFront.labelTypeWork(item.type_work) }}
+                      , {{ helperServiceFront.labelTypeLocation(item.type_location) }}</a>
+                    <div>
+                      Salaire entre {{item.interval_salary[0]}} et {{item.interval_salary[1]}}
+                      $ / an
+                    </div>
+                  </nz-list-item-meta-title>
+                </nz-list-item-meta>
+                <ul nz-list-item-actions>
+                  <nz-list-item-action>
+                    <a href="javascript:void(0)">
+                      <nz-tag *ngIf="item.apply.process_apply==null"
+                              [nzColor]="'blue'">{{helperServiceFront.labelProcessApplyStatus(item.apply.process_apply)}}</nz-tag>
+                      <nz-tag *ngIf="item.apply.process_apply!=null"
+                              [nzColor]="'blue'">{{helperServiceFront.labelProcessApplyStatus(item.apply.process_apply.step)}}</nz-tag>
+                    </a></nz-list-item-action>
+                  <nz-list-item-action *ngIf="item.apply.process_apply!=null">
+                    <a href="javascript:void(0)" [routerLink]="['/apply-process',item.slug,item.apply.id]">
+                      <span nz-icon nzType="delivered-procedure" nzTheme="outline"></span>
+                    </a>
+                  </nz-list-item-action>
+                </ul>
+              </ng-container>
+
+              <nz-skeleton
+                *ngIf="item.loading"
+                [nzActive]="true"
+                [nzTitle]="false"
+                [nzLoading]="true"
+              ></nz-skeleton>
+            </nz-list-item>
+
+          </nz-list>
+        </div>
+
+        <div class="row">
+          <div class="mt-5" *ngIf="offers">
+            <nz-pagination class="pagination" nzShowSizeChanger nzShowQuickJumper
+                           [nzTotal]="offers.total"
+                           [(nzPageIndex)]="offers.current_page"
+                           [(nzPageSize)]="offers.per_page"
+                           (nzPageIndexChange)="pageIndexChanged($event)">
+            </nz-pagination>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="offers.data.length==0">
+        <div class="col-12 text-center mt-55">
+          <span nz-icon nzType="database" nzTheme="outline" style="font-size: 55pt"></span>
+          <div class="mt-2">
+            Aucune donnée disponible
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720"
+               [nzVisible]="isModalSave" nzTitle="{{modalTitle}} {{selected_offer.company.name}}"
+               (nzOnClose)="closeModal()" *ngIf="selected_offer">
+      <form nz-form *nzDrawerContent [formGroup]="validateForm" (submit)="submitForm()">
+        <div style="text-align: left" class="row">
+          <nz-steps [nzCurrent]="current">
+            <nz-step nzTitle="Coordonnées"></nz-step>
+            <nz-step nzTitle="Ma candidature"></nz-step>
+          </nz-steps>
+
+          <div class="steps-content" *ngIf="identity">
+
+            <div [ngSwitch]="current">
+              <div *ngSwitchCase="0">
+                <div class="row mb-4">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <img src="assets/user-icon.png" alt="" width="80">
+                    </div>
+                    <div class="col-md-10 pt-3">
+                      <div
+                        style="font-weight: bold; font-size: 12pt">{{identity.firstname}} {{identity.lastname}} </div>
+                      <div>{{identity.country.name}} - {{identity.address}} </div>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <div>
+                      <div class="title">Email professionnel</div>
+                      <p>{{identity.email}}</p>
+                    </div>
+                    <div>
+                      <div class="title">Numéro de téléphone</div>
+                      <p>{{identity.phone}}</p>
+                    </div>
+
+                    <div>
+                      <div class="title">Curriculum Vitae</div>
+                      <p>
+                        <a class="login-form-forgot" title="" target="_blank"
+                           href="{{storage_link+identity.cv}}">Consulter
+                          le cv</a>
+                      </p>
+                    </div>
+
+                    <div>
+                      <div class="title">Lettre de motivation</div>
+                      <textarea rows="4" nz-input formControlName="motivation"></textarea>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+              <div *ngSwitchCase="1">
+                <div class="row mb-4">
+                  <div class="text-justify mt-4">
+                    <strong>Description du poste :</strong> Assurez-vous de lire attentivement la
+                    description du poste
+                    pour comprendre les responsabilités, les qualifications requises, et les
+                    compétences recherchées. Si
+                    vous ne remplissez pas la plupart des critères essentiels, il pourrait être
+                    préférable de ne pas
+                    postuler.
+                    <br>
+                    <strong>Compagnie et culture d'entreprise :</strong> Renseignez-vous sur
+                    l'entreprise et sa culture.
+                    Assurez-vous que vos valeurs personnelles et votre style de travail
+                    correspondent à ceux de
+                    l'entreprise.
+                    <br>
+                    <strong>Localisation du poste :</strong> Vérifiez où se situe le poste et
+                    assurez-vous que vous êtes
+                    prêt à vous déplacer ou à déménager si nécessaire.
+                    <br>
+                    <strong>Salaire et avantages :</strong> Assurez-vous que le salaire et les
+                    avantages proposés
+                    correspondent à vos attentes et à votre niveau d'expérience.
+                    <br>
+                    <strong>Processus de recrutement :</strong> Renseignez-vous sur le processus de
+                    recrutement de
+                    l'entreprise. Certains processus peuvent être très longs ou exiger plusieurs
+                    entretiens.
+                    <br>
+                    <strong>Réputation de l'entreprise :</strong> Faites des recherches sur la
+                    réputation de
+                    l'entreprise en ligne, en consultant des avis d'employés actuels ou passés, des
+                    rapports sur
+                    l'entreprise, etc.
+                    <br>
+                    <strong>Opportunités de croissance :</strong> Évaluez les opportunités de
+                    croissance et de
+                    développement professionnel au sein de l'entreprise.
+                    <br>
+                    <strong>Politique de diversité et d'inclusion :</strong> Si cela est important
+                    pour vous,
+                    assurez-vous que l'entreprise a une politique de diversité et d'inclusion
+                    alignée avec vos valeurs.
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="steps-action">
+            <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+              <span>Retour</span>
+            </button>
+            <button nz-button nzType="default" (click)="next()" *ngIf="current < 1">
+              <span>Confirmer</span>
+            </button>
+            <button nz-button nzType="primary" style="margin-left: 5%" (click)="done()"
+                    *ngIf="current === 1">
+              <span>Envoyer ma candidature</span>
+            </button>
+          </div>
+
+        </div>
+
+      </form>
+    </nz-drawer>
+
+  </nz-spin>
+</div>

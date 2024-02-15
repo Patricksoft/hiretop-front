@@ -1,0 +1,38 @@
+<div class="col-md-12">
+  <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning">
+    <h4>Tableau de bord</h4>
+    <div *ngIf="statistics">
+      <div style="background: #ECECEC;padding:10px;">
+        <div class="row">
+          <div class="col-md-6">
+            <nz-card nzTitle="Nombre de candidature">
+              <span class="title-count">{{statistics.applies_count}}</span>
+            </nz-card>
+          </div>
+          <div class="col-md-6">
+            <nz-card nzTitle="Nombre d'offre">
+              <span class="title-count">{{statistics.offres_count}}</span>
+            </nz-card>
+          </div>
+
+        </div>
+      </div>
+      <div style="background: #ECECEC;padding:10px;margin-top: 3%">
+        <div class="row">
+          <div class="col-md-6">
+            <nz-card nzTitle="Nombre d'interaction">
+              <span class="title-count">{{statistics.interactions_count}}</span>
+            </nz-card>
+          </div>
+          <div class="col-md-6">
+            <nz-card nzTitle="Qualité des candidatures">
+              <span class="title-count">{{statistics.quality_applies}} %</span>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </nz-spin>
+</div>

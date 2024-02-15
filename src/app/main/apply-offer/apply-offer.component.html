@@ -1,0 +1,426 @@
+<div class="col-md-12">
+    <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning">
+
+        <div class="mb-4">
+            <nz-collapse>
+                <nz-collapse-panel *ngFor="let panel of search_panels" [nzHeader]="panel.name" [nzActive]="panel.active"
+                                   [nzDisabled]="panel.disabled">
+
+                    <form nz-form [formGroup]="searchValidateForm" >
+                        <div class="row">
+                            <div class="col-md-6">
+                                <nz-form-label nzFor="regions">Régions</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select formControlName="regions" [nzSize]="size" nzMode="tags"
+                                               nzPlaceHolder="Choisissez">
+                                        <nz-option *ngFor="let option of countries" [nzLabel]="option.name"
+                                                   [nzValue]="option.id"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </div>
+
+                            <div class="col-md-6">
+                                <nz-form-label nzFor="skill_id">Compétences</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select formControlName="skills" [nzSize]="size" nzMode="tags">
+                                        <nz-option *ngFor="let item of skills" nzValue="{{item.id}}"
+                                                   nzLabel="{{item.name}}"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </div>
+
+                            <div class="col-md-6">
+                                <nz-form-label nzFor="sectors">Secteurs</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select formControlName="sectors" [nzSize]="size" nzMode="tags"
+                                               nzPlaceHolder="Choisissez">
+                                        <nz-option *ngFor="let option of sectors" [nzLabel]="option.name"
+                                                   [nzValue]="option.id"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </div>
+
+                            <div class="col-md-6">
+                                <nz-form-label nzFor="type_contracts">Type de contrats</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select formControlName="type_contracts" [nzSize]="size" nzMode="tags"
+                                               nzPlaceHolder="Choisissez">
+                                        <nz-option nzValue="full_time" nzLabel="Temps plein"></nz-option>
+                                        <nz-option nzValue="part_time" nzLabel="Temps partiel"></nz-option>
+                                        <nz-option nzValue="independent" nzLabel="Indépendant"></nz-option>
+                                        <nz-option nzValue="freelance" nzLabel="Freelance"></nz-option>
+                                        <nz-option nzValue="cdd" nzLabel="CDD"></nz-option>
+                                        <nz-option nzValue="cdi" nzLabel="CDI"></nz-option>
+                                        <nz-option nzValue="internship" nzLabel="Stage"></nz-option>
+                                        <nz-option nzValue="study_contract" nzLabel="Contrat en alternance"></nz-option>
+                                        <nz-option nzValue="seasonal" nzLabel="Saisonnier"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </div>
+                            <div class="col-md-6">
+                                <nz-form-label nzFor="type_location">Type de lieux</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select formControlName="type_location" [nzSize]="size" nzMode="tags"
+                                               nzPlaceHolder="Choisissez">
+                                        <nz-option nzValue="on_site" nzLabel="Sur site"></nz-option>
+                                        <nz-option nzValue="afar" nzLabel="À distance"></nz-option>
+                                        <nz-option nzValue="hybrid" nzLabel="Hybride"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </div>
+                            <div class="col-md-6">
+                                <nz-form-label nzFor="languages">Langues</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select formControlName="languages" [nzSize]="size" nzMode="tags"
+                                               nzPlaceHolder="Choisissez">
+                                        <nz-option nzValue="Anglais" nzLabel="Anglais"></nz-option>
+                                        <nz-option nzValue="Espagnol" nzLabel="Espagnol"></nz-option>
+                                        <nz-option nzValue="Français" nzLabel="Français"></nz-option>
+                                        <nz-option nzValue="Mandarin" nzLabel="Mandarin"></nz-option>
+                                        (chinois)
+                                        <nz-option nzValue="Hindi" nzLabel="Hindi"></nz-option>
+                                        <nz-option nzValue="Arabe" nzLabel="Arabe"></nz-option>
+                                        <nz-option nzValue="Bengali" nzLabel="Bengali"></nz-option>
+                                        <nz-option nzValue="Russe" nzLabel="Russe"></nz-option>
+                                        <nz-option nzValue="Portugais" nzLabel="Portugais"></nz-option>
+                                        <nz-option nzValue="Ourdou" nzLabel="Ourdou"></nz-option>
+                                        <nz-option nzValue="Allemand" nzLabel="Allemand"></nz-option>
+                                        <nz-option nzValue="Japonais" nzLabel="Japonais"></nz-option>
+                                        <nz-option nzValue="Swahili" nzLabel="Swahili"></nz-option>
+                                        <nz-option nzValue="Telugu" nzLabel="Telugu"></nz-option>
+                                        <nz-option nzValue="Marathi" nzLabel="Marathi"></nz-option>
+                                        <nz-option nzValue="Turc" nzLabel="Turc"></nz-option>
+                                        <nz-option nzValue="Tamil" nzLabel="Tamil"></nz-option>
+                                        <nz-option nzValue="Urdu" nzLabel="Urdu"></nz-option>
+                                        <nz-option nzValue="Coréen" nzLabel="Coréen"></nz-option>
+                                        <nz-option nzValue="Italien" nzLabel="Italien"></nz-option>
+                                        <nz-option nzValue="Punjabi" nzLabel="Punjabi"></nz-option>
+                                        <nz-option nzValue="Javanais" nzLabel="Javanais"></nz-option>
+                                        <nz-option nzValue="Wu" nzLabel="Wu"></nz-option>
+                                        (chinois)
+                                        <nz-option nzValue="Vietnamien" nzLabel="Vietnamien"></nz-option>
+                                        <nz-option nzValue="Cantonais" nzLabel="Cantonais"></nz-option>
+                                        (chinois)
+                                        <nz-option nzValue="Gujarati" nzLabel="Gujarati"></nz-option>
+                                        <nz-option nzValue="Pashto" nzLabel="Pashto"></nz-option>
+                                        <nz-option nzValue="Malayalam" nzLabel="Malayalam"></nz-option>
+                                        <nz-option nzValue="Sundanais" nzLabel="Sundanais"></nz-option>
+                                        <nz-option nzValue="Hausa" nzLabel="Hausa"></nz-option>
+                                        <nz-option nzValue="Farsi" nzLabel="Farsi"></nz-option>
+                                        (persan)
+                                        <nz-option nzValue="Birman" nzLabel="Birman"></nz-option>
+                                        <nz-option nzValue="Thaï" nzLabel="Thaï"></nz-option>
+                                        <nz-option nzValue="Ouzbek" nzLabel="Ouzbek"></nz-option>
+                                        <nz-option nzValue="Jin" nzLabel="Jin"></nz-option>
+                                        (chinois)
+                                        <nz-option nzValue="Yoruba" nzLabel="Yoruba"></nz-option>
+                                        <nz-option nzValue="Serbo-croate" nzLabel="Serbo-croate"></nz-option>
+                                        <nz-option nzValue="Malgache" nzLabel="Malgache"></nz-option>
+                                        <nz-option nzValue="Saraiki" nzLabel="Saraiki"></nz-option>
+                                        <nz-option nzValue="Népalais" nzLabel="Népalais"></nz-option>
+                                        <nz-option nzValue="Sarde" nzLabel="Sarde"></nz-option>
+                                        <nz-option nzValue="Khmer" nzLabel="Khmer"></nz-option>
+                                        (cambodgien)
+                                        <nz-option nzValue="Sinhala" nzLabel="Sinhala"></nz-option>
+                                        (singhalais)
+                                        <nz-option nzValue="Chhattisgarhi" nzLabel="Chhattisgarhi"></nz-option>
+                                        <nz-option nzValue="Zoulou" nzLabel="Zoulou"></nz-option>
+                                        <nz-option nzValue="Assamais" nzLabel="Assamais"></nz-option>
+                                        <nz-option nzValue="Madurais" nzLabel="Madurais"></nz-option>
+                                        <nz-option nzValue="Somali" nzLabel="Somali"></nz-option>
+                                        <nz-option nzValue="Marwari" nzLabel="Marwari"></nz-option>
+                                        <nz-option nzValue="Magahi" nzLabel="Magahi"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </div>
+
+                            <div class="col-md-6">
+                                <nz-form-label nzFor="year_exp_max">Année expérience</nz-form-label>
+                                <nz-form-control>
+                                    <nz-input-group>
+                                        <input type="number" nz-input formControlName="year_exp_max" min="1"/>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </div>
+
+                            <div class="col-md-6">
+                                <nz-form-label nzFor="remunerations_min">Salaire min par mois</nz-form-label>
+                                <nz-form-control>
+                                    <nz-input-group>
+                                        <input type="number" nz-input formControlName="remunerations_min" min="1"/>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </div>
+                            <div class="col-md-6">
+                                <nz-form-label nzFor="">Lancer</nz-form-label>
+
+                                <button (click)="submitSearchForm()" nz-button class="login-form-button login-form-margin col-md-12 "
+                                        [disabled]="!searchValidateForm.valid"
+                                        [nzType]="'primary'">
+                                    Rechercher
+                                </button>
+                            </div>
+
+                            <div class="col-md-6">
+                                <nz-form-label nzFor="">Lancer</nz-form-label>
+
+                                <button nz-button class="col-md-12"
+                                        nzType="primary"
+                                        nzGhost (click)="submitConfigSearchForm()"
+                                >
+                                    Rechercher suivant ma configuration
+                                </button>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </nz-collapse-panel>
+            </nz-collapse>
+        </div>
+
+        <div *ngIf="offers">
+            <h5>Liste des offres disponibles</h5>
+            <div *ngIf="offers.data.length>0">
+                <div class="row">
+                    <div class="col-md-4" style="border-right: 1px solid grey; height: 100vh; overflow-x: auto">
+                        <nz-list class="demo-loadmore-list">
+                            <nz-list-item *ngFor="let item of offers.data"
+                                          (click)="showDetail(item)"
+                                          style="cursor: pointer;">
+                                <ng-container>
+                                    <img src="{{storage_link+item.company.logo}}" alt="" width="40"
+                                         style="margin-right: 10px; border-radius: 50%">
+                                    <nz-list-item-meta
+                                            nzDescription="{{ item.company.name }}"
+                                    >
+                                        <nz-list-item-meta-title>
+
+                                            <a href="javascript:void(0)" class="text-primary">{{ item.label }}</a>
+                                            <br>
+                                            <a href="javascript:void(0)"
+                                               style="font-weight: bold">{{ item.country.name }}
+                                                , {{ helperServiceFront.labelTypeWork(item.type_work) }}
+                                                , {{ helperServiceFront.labelTypeLocation(item.type_location) }}</a>
+                                            <div>
+                                                Salaire entre {{item.interval_salary[0]}} et {{item.interval_salary[1]}}
+                                                $ / an
+                                            </div>
+                                        </nz-list-item-meta-title>
+                                    </nz-list-item-meta>
+                                </ng-container>
+
+                                <nz-skeleton
+                                        *ngIf="item.loading"
+                                        [nzActive]="true"
+                                        [nzTitle]="false"
+                                        [nzLoading]="true"
+                                ></nz-skeleton>
+                            </nz-list-item>
+
+                        </nz-list>
+                    </div>
+                    <div class="col-md-8" *ngIf="selected_offer" style="height: 100vh; overflow-x: auto">
+                        <h3>{{selected_offer.label}}</h3>
+                        <div class="mb-2">
+                            <a href="javascript:void(0)"
+                               style="font-weight: bold; color: black; font-weight: normal">{{ selected_offer.country.name }}
+                                ,
+                                {{ helperServiceFront.labelTypeWork(selected_offer.type_work) }},
+                                {{ helperServiceFront.labelTypeLocation(selected_offer.type_location) }}</a>
+                        </div>
+                        <button nz-button class="login-form-button login-form-margin"
+                                [nzType]="'primary'" style="margin-right: 2%" (click)="applyProcess()"
+                                [disabled]="selected_offer.apply!=null">
+                            Postuler <span nz-icon nzType="export" nzTheme="outline"></span>
+                        </button>
+
+                        <h6 class="mt-2">Langues</h6>
+                        <span *ngFor="let item of selected_offer.languages"> {{item}};</span>
+                        <h6 class="mt-2">Compétences</h6>
+                        <span *ngFor="let item of selected_offer.offer_skills"> {{item.skill.name}};</span>
+                        <h6 class="mt-2">Années d'expérience</h6>
+                        <span> {{selected_offer.year_exp[0]}} à {{selected_offer.year_exp[1]}} ans </span>
+                        <h6 class="mt-2">Secteur</h6>
+                        <span> {{selected_offer.sector.name}}</span>
+
+
+                        <h5 class="mt-2">À propos de l’offre d’emploi</h5>
+                        <div [innerHTML]="selected_offer.detail">
+                        </div>
+
+                        <hr>
+                        <nz-collapse>
+                            <nz-collapse-panel *ngFor="let panel of panels" [nzHeader]="panel.name"
+                                               [nzActive]="panel.active" [nzDisabled]="panel.disabled">
+                                <h6 class="mt-2">A propos de nous</h6>
+                                <div [innerHTML]="selected_offer.company.presentation.about">
+                                </div>
+                                <h6 class="mt-2">Notre histoire</h6>
+                                <div [innerHTML]="selected_offer.company.presentation.story">
+                                </div>
+                                <h6 class="mt-2">Culture</h6>
+                                <div [innerHTML]="selected_offer.company.presentation.culture">
+                                </div>
+                                <h6 class="mt-2">Valeurs</h6>
+                                <div [innerHTML]="selected_offer.company.presentation.valeur">
+                                </div>
+
+                            </nz-collapse-panel>
+                        </nz-collapse>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mt-5" *ngIf="offers">
+                        <nz-pagination class="pagination" nzShowSizeChanger nzShowQuickJumper
+                                       [nzTotal]="offers.total"
+                                       [(nzPageIndex)]="offers.current_page"
+                                       [(nzPageSize)]="offers.per_page"
+                                       (nzPageIndexChange)="pageIndexChanged($event)">
+                        </nz-pagination>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="offers.data.length==0">
+                <div class="col-12 text-center mt-55">
+                    <span nz-icon nzType="database" nzTheme="outline" style="font-size: 55pt"></span>
+                    <div class="mt-2">
+                        Aucune donnée disponible
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720"
+                   [nzVisible]="isModalSave" nzTitle="{{modalTitle}} {{selected_offer.company.name}}"
+                   (nzOnClose)="closeModal()" *ngIf="selected_offer">
+            <form nz-form *nzDrawerContent [formGroup]="validateForm" (submit)="submitForm()">
+                <div style="text-align: left" class="row">
+                    <nz-steps [nzCurrent]="current">
+                        <nz-step nzTitle="Coordonnées"></nz-step>
+                        <nz-step nzTitle="Ma candidature"></nz-step>
+                    </nz-steps>
+
+                    <div class="steps-content" *ngIf="identity">
+
+                        <div [ngSwitch]="current">
+                            <div *ngSwitchCase="0">
+                                <div class="row mb-4">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="assets/user-icon.png" alt="" width="80">
+                                        </div>
+                                        <div class="col-md-10 pt-3">
+                                            <div
+                                                    style="font-weight: bold; font-size: 12pt">{{identity.firstname}} {{identity.lastname}} </div>
+                                            <div>{{identity.country.name}} - {{identity.address}} </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div>
+                                            <div class="title">Email professionnel</div>
+                                            <p>{{identity.email}}</p>
+                                        </div>
+                                        <div>
+                                            <div class="title">Numéro de téléphone</div>
+                                            <p>{{identity.phone}}</p>
+                                        </div>
+
+                                        <div>
+                                            <div class="title">Curriculum Vitae</div>
+                                            <p>
+                                                <a class="login-form-forgot" title="" target="_blank"
+                                                   href="{{storage_link+identity.cv}}">Consulter
+                                                    le cv</a>
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <div class="title">Lettre de motivation</div>
+                                            <textarea rows="4" nz-input formControlName="motivation"></textarea>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="1">
+                                <div class="row mb-4">
+                                    <div class="text-justify mt-4">
+                                        <strong>Description du poste :</strong> Assurez-vous de lire attentivement la
+                                        description du poste
+                                        pour comprendre les responsabilités, les qualifications requises, et les
+                                        compétences recherchées. Si
+                                        vous ne remplissez pas la plupart des critères essentiels, il pourrait être
+                                        préférable de ne pas
+                                        postuler.
+                                        <br>
+                                        <strong>Compagnie et culture d'entreprise :</strong> Renseignez-vous sur
+                                        l'entreprise et sa culture.
+                                        Assurez-vous que vos valeurs personnelles et votre style de travail
+                                        correspondent à ceux de
+                                        l'entreprise.
+                                        <br>
+                                        <strong>Localisation du poste :</strong> Vérifiez où se situe le poste et
+                                        assurez-vous que vous êtes
+                                        prêt à vous déplacer ou à déménager si nécessaire.
+                                        <br>
+                                        <strong>Salaire et avantages :</strong> Assurez-vous que le salaire et les
+                                        avantages proposés
+                                        correspondent à vos attentes et à votre niveau d'expérience.
+                                        <br>
+                                        <strong>Processus de recrutement :</strong> Renseignez-vous sur le processus de
+                                        recrutement de
+                                        l'entreprise. Certains processus peuvent être très longs ou exiger plusieurs
+                                        entretiens.
+                                        <br>
+                                        <strong>Réputation de l'entreprise :</strong> Faites des recherches sur la
+                                        réputation de
+                                        l'entreprise en ligne, en consultant des avis d'employés actuels ou passés, des
+                                        rapports sur
+                                        l'entreprise, etc.
+                                        <br>
+                                        <strong>Opportunités de croissance :</strong> Évaluez les opportunités de
+                                        croissance et de
+                                        développement professionnel au sein de l'entreprise.
+                                        <br>
+                                        <strong>Politique de diversité et d'inclusion :</strong> Si cela est important
+                                        pour vous,
+                                        assurez-vous que l'entreprise a une politique de diversité et d'inclusion
+                                        alignée avec vos valeurs.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="steps-action">
+                        <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+                            <span>Retour</span>
+                        </button>
+                        <button nz-button nzType="default" (click)="next()" *ngIf="current < 1">
+                            <span>Confirmer</span>
+                        </button>
+                        <button nz-button nzType="primary" style="margin-left: 5%" (click)="done()"
+                                *ngIf="current === 1">
+                            <span>Envoyer ma candidature</span>
+                        </button>
+                    </div>
+
+                </div>
+                <!-- <div class="mt-4">
+                   <button nz-button class="login-form-button login-form-margin col-md-4"
+                           [disabled]="!validateForm.valid"
+                           [nzType]="'primary'" style="margin-right: 2%">
+                     Enregistrer
+                   </button>
+                 </div>-->
+            </form>
+        </nz-drawer>
+
+    </nz-spin>
+</div>

@@ -1,0 +1,30 @@
+
+<div class="col-md-12">
+  <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning">
+    <form nz-form class="login-form text-center" [formGroup]="validateForm" (submit)="submitForm()">
+      <div style="text-align: left" class="row">
+        <div class="col-md-12">
+          <nz-form-label nzFor="web_site">{{key_title}}</nz-form-label>
+          <nz-form-control>
+            <nz-input-group>
+              <editor
+                [init]="{ plugins: 'lists link image table code help wordcount' }"
+                apiKey="yfms8az1wlgnme4a14cm4hrn43e2pmxe5ballw128a5uie4w"
+                formControlName="key"
+              ></editor>
+            </nz-input-group>
+          </nz-form-control>
+        </div>
+
+
+
+        <div class="text-center mt-4">
+          <button nz-button class="login-form-button login-form-margin col-md-4 mt-3 " [disabled]="!validateForm.valid"
+                  [nzType]="'primary'">
+            Mettre à jour
+          </button>
+        </div>
+      </div>
+    </form>
+  </nz-spin>
+</div>

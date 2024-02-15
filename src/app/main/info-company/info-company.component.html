@@ -1,0 +1,38 @@
+<div>
+  <nz-tabset nzLinkRouter>
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'one' }" queryParamsHandling="merge">
+        Informations personnelles
+      </a>
+      <app-set-company></app-set-company>
+    </nz-tab>
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'two' }" queryParamsHandling="merge">
+        A propos de nous
+      </a>
+      <app-set-company-detail item="about"></app-set-company-detail>
+    </nz-tab>
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'three' }" queryParamsHandling="merge">
+       Histoire
+      </a>
+      <app-set-company-detail item="story"></app-set-company-detail>
+
+    </nz-tab>
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'four' }" queryParamsHandling="merge">
+        Culture
+      </a>
+      <app-set-company-detail item="culture"></app-set-company-detail>
+
+    </nz-tab>
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'five' }" queryParamsHandling="merge">
+        Nos valeurs
+      </a>
+      <app-set-company-detail item="valeur"></app-set-company-detail>
+
+    </nz-tab>
+
+  </nz-tabset>
+</div>

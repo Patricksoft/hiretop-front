@@ -1,0 +1,404 @@
+<div class="col-md-12">
+  <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning">
+    <div *ngIf="offer && offer.applies!=null && offer.applies.length>0">
+
+      <h6 class="mb-4">Processus de recrutement
+        de {{offer.applies[0]["user"]["identity"]["firstname"]}} {{offer.applies[0]["user"]["identity"]["lastname"]}}
+        pour le poste de {{offer.label}}</h6>
+
+      <nz-steps [nzCurrent]="current">
+        <nz-step (click)="goTo(0)" nzTitle="Pré-sélection & sélection"></nz-step>
+        <nz-step (click)="goTo(1)" nzTitle="Entretien de compétence"></nz-step>
+        <nz-step (click)="goTo(2)" nzTitle="Vérification de référence"></nz-step>
+        <nz-step (click)="goTo(3)" nzTitle="Offre de d'emploi"></nz-step>
+        <nz-step (click)="goTo(4)" nzTitle="Décision finale"></nz-step>
+      </nz-steps>
+
+      <div class="steps-content">
+        <form nz-form [formGroup]="validateForm" (submit)="submitForm()">
+
+          <div [ngSwitch]="helperServiceFront.user()['type']">
+
+            <div *ngSwitchCase="'company'">
+
+              <div [ngSwitch]="current" class="col-12">
+                <div class="row" *ngSwitchCase="0">
+
+                  <app-apply-process-story [offer]="offer" [pos]="0"></app-apply-process-story>
+
+                  <div class="row" *ngIf="offer.applies[0]['process_apply']==null">
+                    <div class="title-case"> Procéder à la présélection de ce profil</div>
+                    <div class="col-md-12">
+                      <nz-form-label nzFor="msg">Envoyez un message personnalisé</nz-form-label>
+                      <nz-form-control>
+                        <nz-input-group>
+                          <editor
+                            [init]="{ plugins: 'lists link image table code help wordcount' }"
+                            apiKey="yfms8az1wlgnme4a14cm4hrn43e2pmxe5ballw128a5uie4w"
+                            formControlName="msg"
+                          ></editor>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </div>
+                    <div class="col-md-12 mt-2">
+                      <nz-form-label nzFor="selection_interview_planning">Veillez proposer des horaires pour un
+                        entretien
+                        de
+                        sélection
+                      </nz-form-label>
+                      <nz-form-control>
+                        <nz-input-group>
+                          <input type="datetime-local" nz-input formControlName="selection_interview_planning1"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                      <nz-form-control class="mt-2">
+                        <nz-input-group>
+                          <input type="datetime-local" nz-input formControlName="selection_interview_planning2"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                      <nz-form-control class="mt-2">
+                        <nz-input-group>
+                          <input type="datetime-local" nz-input formControlName="selection_interview_planning3"/>
+                        </nz-input-group>
+                      </nz-form-control>
+
+                    </div>
+                    <div class="mt-4">
+                      <button nz-button class="login-form-button login-form-margin col-md-4"
+                              [disabled]="!validateForm.valid"
+                              [nzType]="'primary'" style="margin-right: 2%">
+                        Envoyer
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="offer.applies[0]['process_apply']!=null
+                && offer.applies[0]['process_apply']['step']=='preselection'
+                && offer.applies[0]['process_apply']['selection_interview_planning_selected']==null">
+                    <nz-alert nzType="warning"
+                              nzMessage="En attente de choix de la date d'entretien de selection par le candidat"
+                              nzShowIcon>
+                    </nz-alert>
+
+                  </div>
+                  <div class="row" *ngIf="offer.applies[0]['process_apply']!=null
+                && offer.applies[0]['process_apply']['step']=='preselection'
+                && offer.applies[0]['process_apply']['selection_interview_planning_selected']!=null">
+                    <div class="col-md-12">
+                      <nz-form-label nzFor="selection_decision">Prendre une décision suite à l'entretien</nz-form-label>
+                      <nz-form-control>
+                        <nz-select formControlName="selection_decision">
+                          <nz-option nzValue="accepted" nzLabel="Nous acceptons ce talent"></nz-option>
+                          <nz-option nzValue="refused" nzLabel="Nous refusons ce profil"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </div>
+
+                    <div *ngIf="validateForm.value.selection_decision=='accepted'">
+                      <div class="col-md-12 mt-2">
+                        <nz-form-label nzFor="selection_interview_planning">Veillez proposer des horaires pour un
+                          entretien
+                          de
+                          compétence
+                        </nz-form-label>
+                        <nz-form-control>
+                          <nz-input-group>
+                            <input type="datetime-local" nz-input formControlName="competency_interview_planning1"/>
+                          </nz-input-group>
+                        </nz-form-control>
+                        <nz-form-control class="mt-2">
+                          <nz-input-group>
+                            <input type="datetime-local" nz-input formControlName="competency_interview_planning2"/>
+                          </nz-input-group>
+                        </nz-form-control>
+                        <nz-form-control class="mt-2">
+                          <nz-input-group>
+                            <input type="datetime-local" nz-input formControlName="competency_interview_planning3"/>
+                          </nz-input-group>
+                        </nz-form-control>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <nz-form-label nzFor="msg2">Envoyez un message personnalisé</nz-form-label>
+                      <nz-form-control>
+                        <nz-input-group>
+                          <editor
+                            [init]="{ plugins: 'lists link image table code help wordcount' }"
+                            apiKey="yfms8az1wlgnme4a14cm4hrn43e2pmxe5ballw128a5uie4w"
+                            formControlName="msg2"
+                          ></editor>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </div>
+                    <div class="mt-4">
+                      <button nz-button class="login-form-button login-form-margin col-md-4"
+                              [disabled]="!validateForm.valid"
+                              [nzType]="'primary'" style="margin-right: 2%">
+                        Envoyer
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-12" *ngSwitchCase="1">
+                  <app-apply-process-story [offer]="offer" [pos]="1"></app-apply-process-story>
+                  <div class="row" *ngIf="offer.applies[0]['process_apply']!=null
+                && offer.applies[0]['process_apply']['step']=='selection'
+                && offer.applies[0]['process_apply']['competency_interview_planning_selected']!=null">
+                    <div class="col-md-12">
+                      <nz-form-label nzFor="competency_interview_decision">Prendre une décision suite à l'entretien
+                      </nz-form-label>
+                      <nz-form-control>
+                        <nz-select formControlName="competency_interview_decision">
+                          <nz-option nzValue="accepted" nzLabel="Nous acceptons ce talent"></nz-option>
+                          <nz-option nzValue="refused" nzLabel="Nous refusons ce profil"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </div>
+
+                    <div class="col-md-12">
+                      <nz-form-label nzFor="msg3">Envoyez un message personnalisé</nz-form-label>
+                      <nz-form-control>
+                        <nz-input-group>
+                          <editor
+                            [init]="{ plugins: 'lists link image table code help wordcount' }"
+                            apiKey="yfms8az1wlgnme4a14cm4hrn43e2pmxe5ballw128a5uie4w"
+                            formControlName="msg3"
+                          ></editor>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </div>
+                    <div class="mt-4">
+                      <button nz-button class="login-form-button login-form-margin col-md-4"
+                              [disabled]="!validateForm.valid"
+                              [nzType]="'primary'" style="margin-right: 2%">
+                        Envoyer
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-12" *ngSwitchCase="2">
+                  <app-apply-process-story [offer]="offer" [pos]="2"></app-apply-process-story>
+                  <div class="row" *ngIf="offer.applies[0]['process_apply']!=null
+                && offer.applies[0]['process_apply']['step']=='competency_interview'
+                && offer.applies[0]['process_apply']['reference_checking_decision']==null">
+                    <div class="col-md-12">
+                      <nz-form-label nzFor="reference_checking_decision">Résultat suite à la vérification des références
+                      </nz-form-label>
+                      <nz-form-control>
+                        <nz-select formControlName="reference_checking_decision">
+                          <nz-option nzValue="accepted" nzLabel="Nous acceptons ce talent"></nz-option>
+                          <nz-option nzValue="refused" nzLabel="Nous refusons ce profil"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </div>
+
+                    <div class="col-md-12">
+                      <nz-form-label nzFor="msg4" *ngIf="validateForm.value.reference_checking_decision=='accepted'">
+                        Rédiger la proposition d'offre d'emploi
+                      </nz-form-label>
+                      <nz-form-label nzFor="msg4"
+                                     *ngIf="validateForm.value.reference_checking_decision=='refused' || validateForm.value.reference_checking_decision==null">
+                        Envoyez un message personnalisé
+                      </nz-form-label>
+                      <nz-form-control>
+                        <nz-input-group>
+                          <editor
+                            [init]="{ plugins: 'lists link image table code help wordcount' }"
+                            apiKey="yfms8az1wlgnme4a14cm4hrn43e2pmxe5ballw128a5uie4w"
+                            formControlName="msg4"
+                          ></editor>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </div>
+                    <div class="mt-4">
+                      <button nz-button class="login-form-button login-form-margin col-md-4"
+                              [disabled]="!validateForm.valid"
+                              [nzType]="'primary'" style="margin-right: 2%">
+                        Envoyer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12" *ngSwitchCase="3">
+                  <app-apply-process-story [offer]="offer" [pos]="3"></app-apply-process-story>
+
+                </div>
+                <div class="col-12" *ngSwitchCase="4">
+                  <app-apply-process-story [offer]="offer" [pos]="4"></app-apply-process-story>
+                  <div class="row" *ngIf="offer.applies[0]['process_apply']!=null
+                && offer.applies[0]['process_apply']['step']=='job_offer'
+                && offer.applies[0]['process_apply']['final_decision_at']==null">
+
+                    <div class="col-md-12">
+                      <nz-form-label nzFor="final_decision_decision">Décision finale de l'entreprise
+                      </nz-form-label>
+                      <nz-form-control>
+                        <nz-select formControlName="final_decision_decision">
+                          <nz-option nzValue="accepted" nzLabel="Nous embauchons ce talent"></nz-option>
+                          <nz-option nzValue="refused" nzLabel="Nous refusons ce profil"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </div>
+
+                    <div class="col-md-12">
+
+                      <nz-form-label nzFor="msg6">
+                        Envoyez un message personnalisé
+                      </nz-form-label>
+                      <nz-form-control>
+                        <nz-input-group>
+                          <editor
+                            [init]="{ plugins: 'lists link image table code help wordcount' }"
+                            apiKey="yfms8az1wlgnme4a14cm4hrn43e2pmxe5ballw128a5uie4w"
+                            formControlName="msg6"
+                          ></editor>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </div>
+
+                    <div class="mt-4">
+                      <button nz-button class="login-form-button login-form-margin col-md-4"
+                              [disabled]="!validateForm.valid"
+                              [nzType]="'primary'" style="margin-right: 2%">
+                        Envoyer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+
+            <div *ngSwitchCase="'talent'">
+              <div [ngSwitch]="current">
+                <div class="col-12" *ngSwitchCase="0">
+                  <app-apply-process-story [offer]="offer" [pos]="0"></app-apply-process-story>
+
+                  <div class="row" *ngIf="offer.applies[0]['process_apply']!=null
+                && offer.applies[0]['process_apply']['step']=='preselection'
+                && offer.applies[0]['process_apply']['selection_interview_planning_selected']==null">
+
+                    <h6 class="mt-2">Veuillez choisir votre disponibilité pour un entretien de sélection</h6>
+                    <div class="col-md-12">
+                      <nz-form-control>
+                        <nz-select formControlName="selection_interview_planning">
+                          <nz-option
+                            *ngFor="let item of offer.applies[0]['process_apply']['selection_interview_planning']"
+                            nzValue="{{item}}" nzLabel="{{item | date:'d/M/Y à HH:mm'}}"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </div>
+                    <div class="mt-4">
+                      <button nz-button class="login-form-button login-form-margin col-md-4"
+                              [disabled]="!validateForm.valid"
+                              [nzType]="'primary'" style="margin-right: 2%">
+                        Envoyer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12" *ngSwitchCase="1">
+                  <app-apply-process-story [offer]="offer" [pos]="1"></app-apply-process-story>
+                  <div class="row" *ngIf="offer.applies[0]['process_apply']!=null
+                && offer.applies[0]['process_apply']['step']=='selection'
+                && offer.applies[0]['process_apply']['competency_interview_planning_selected']==null">
+
+                    <h6 class="mt-2">Veuillez choisir votre disponibilité pour votre entretien de compétence</h6>
+                    <div class="col-md-12">
+                      <nz-form-control>
+                        <nz-select formControlName="competency_interview_planning_selected">
+                          <nz-option
+                            *ngFor="let item of offer.applies[0]['process_apply']['competency_interview_planning']"
+                            nzValue="{{item}}" nzLabel="{{item | date:'d/M/Y à HH:mm'}}"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </div>
+                    <div class="mt-4">
+                      <button nz-button class="login-form-button login-form-margin col-md-4"
+                              [disabled]="!validateForm.valid"
+                              [nzType]="'primary'" style="margin-right: 2%">
+                        Envoyer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12" *ngSwitchCase="2">
+                  <app-apply-process-story [offer]="offer" [pos]="2"></app-apply-process-story>
+
+                </div>
+                <div class="col-12" *ngSwitchCase="3">
+                  <app-apply-process-story [offer]="offer" [pos]="3"></app-apply-process-story>
+                  <div class="row" *ngIf="offer.applies[0]['process_apply']!=null
+                && offer.applies[0]['process_apply']['step']=='reference_checking'
+                && offer.applies[0]['process_apply']['job_offer_decision']==null">
+                    <div class="col-md-12">
+                      <nz-form-label nzFor="job_offer_decision">Veuillez lire la proposition d'offre et
+                        donner votre décision
+                      </nz-form-label>
+                      <nz-form-control>
+                        <nz-select formControlName="job_offer_decision">
+                          <nz-option nzValue="accepted" nzLabel="J'accepte cet offre"></nz-option>
+                          <nz-option nzValue="refused" nzLabel="Cet offre me convient pas"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </div>
+
+                    <div class="col-md-12">
+
+                      <nz-form-label nzFor="msg5">
+                        Envoyez un message personnalisé
+                      </nz-form-label>
+                      <nz-form-control>
+                        <nz-input-group>
+                          <editor
+                            [init]="{ plugins: 'lists link image table code help wordcount' }"
+                            apiKey="yfms8az1wlgnme4a14cm4hrn43e2pmxe5ballw128a5uie4w"
+                            formControlName="msg5"
+                          ></editor>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </div>
+                    <div class="mt-4">
+                      <button nz-button class="login-form-button login-form-margin col-md-4"
+                              [disabled]="!validateForm.valid"
+                              [nzType]="'primary'" style="margin-right: 2%">
+                        Envoyer
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-12" *ngSwitchCase="4">
+                  <app-apply-process-story [offer]="offer" [pos]="4"></app-apply-process-story>
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+
+
+        </form>
+      </div>
+      <div class="steps-action">
+        <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+          <span>Previous</span>
+        </button>
+        <button nz-button nzType="default" (click)="next()" *ngIf="current < 4">
+          <span>Next</span>
+        </button>
+        <button nz-button nzType="primary" (click)="done()" *ngIf="current === 4">
+          <span>Done</span>
+        </button>
+      </div>
+
+    </div>
+  </nz-spin>
+</div>
+

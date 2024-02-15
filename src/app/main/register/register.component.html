@@ -1,0 +1,83 @@
+<div style="width: 100%">
+  <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning"	>
+  <div class="row">
+    <div class="col-md-7 d-md-block  d-lg-block d-none">
+      <img src="assets/back.jpg" alt="" style="height: 100vh; width: 100%">
+    </div>
+    <div class="col-md-5 p-5">
+      <form nz-form class="login-form text-center" [formGroup]="validateForm" (submit)="submitForm()" *ngIf="step=='register'">
+        <img src="assets/hiretop-logo.png" alt="logo-hiretop" width="150">
+        <h5>Je veux créer un compte </h5>
+        <br>
+        <div style="text-align: left" class="">
+          <nz-form-label nzFor="username">Nom d'utilisateur</nz-form-label>
+          <nz-form-control >
+            <nz-input-group >
+              <input type="text" nz-input  ngModel  formControlName="username" />
+            </nz-input-group>
+          </nz-form-control>
+
+          <nz-form-label nzFor="email">Email</nz-form-label>
+          <nz-form-control>
+            <nz-input-group >
+              <input type="email" nz-input  ngModel  formControlName="email" />
+            </nz-input-group>
+          </nz-form-control>
+
+          <nz-form-label nzFor="type">Je suis </nz-form-label>
+          <nz-form-control >
+            <nz-select formControlName="type" >
+              <nz-option nzValue="talent" nzLabel="Un talent"></nz-option>
+              <nz-option nzValue="company" nzLabel="Une entreprise"></nz-option>
+            </nz-select>
+          </nz-form-control>
+
+          <nz-form-label nzFor="password">Mot de passe</nz-form-label>
+          <nz-form-control nzErrorTip="Le mot de passe est obligatoire !">
+            <nz-input-group>
+              <input type="password" nz-input formControlName="password" placeholder="Mot de passe" />
+            </nz-input-group>
+          </nz-form-control>
+
+          <div class="mt-3">
+            <a class="login-form-forgot" title="Veuillez contacter le service IT.">Mot de passe oublié ?</a>
+          </div>
+
+          <div class="text-center">
+            <button  nz-button class="login-form-button login-form-margin col-md-6 mt-3 " [disabled]="!validateForm.valid"
+                     [nzType]="'primary'">
+              Je m'inscris
+            </button>
+          </div>
+        </div>
+      </form>
+      <form nz-form class="login-form text-center" [formGroup]="validateCodeForm" (submit)="submitValidationForm()"
+            *ngIf="step=='validation'">
+        <img src="assets/hiretop-logo.png" alt="logo-hiretop" width="150">
+        <h5>Validation de compte </h5>
+        <br>
+        <div style="text-align: left" class="">
+
+
+          <nz-form-label nzFor="password">Entrer le code reçu par mail</nz-form-label>
+          <nz-form-control >
+            <nz-input-group>
+              <input type="text" nz-input formControlName="code"  />
+            </nz-input-group>
+          </nz-form-control>
+
+
+          <div class="text-center">
+            <button  nz-button class="login-form-button login-form-margin col-md-6 mt-3 "
+                     [disabled]="!validateCodeForm.valid"
+                     [nzType]="'primary'">
+              Valider mon compte
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+  </nz-spin>
+</div>

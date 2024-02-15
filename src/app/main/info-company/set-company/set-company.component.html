@@ -1,0 +1,117 @@
+<div class="col-md-12">
+  <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning">
+    <form nz-form class="login-form text-center" [formGroup]="validateForm" (submit)="submitForm()">
+      <div style="text-align: left" class="row">
+        <div class="col-md-6">
+          <nz-form-label nzFor="name">Raison social</nz-form-label>
+          <nz-form-control>
+            <nz-input-group>
+              <input type="text" nz-input formControlName="name"/>
+            </nz-input-group>
+          </nz-form-control>
+        </div>
+        <div class="col-md-6">
+          <nz-form-label nzFor="creation_date">Date de création</nz-form-label>
+          <nz-form-control>
+            <nz-input-group>
+              <input type="date" nz-input formControlName="creation_date"/>
+            </nz-input-group>
+          </nz-form-control>
+        </div>
+
+        <div class="col-md-6">
+          <nz-form-label nzFor="sector_id">Secteur</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="sector_id">
+              <nz-option *ngFor="let item of sectors" nzValue="{{item.id}}" nzLabel="{{item.name}}"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </div>
+
+
+        <div class="col-md-6">
+          <nz-form-label nzFor="cv">Logo </nz-form-label>
+          <a *ngIf="company" class="login-form-forgot" title="" target="_blank" href="{{storage_link+company.logo}}">Consulter le fichier</a>
+          <nz-form-control>
+            <nz-input-group>
+              <input type="file" nz-input formControlName="logo_file" (change)="handleFileUpload($event,'logo')"/>
+            </nz-input-group>
+          </nz-form-control>
+        </div>
+
+        <div class="col-md-6">
+          <nz-form-label nzFor="cv">Document officiel de creation d'entreprise </nz-form-label> <a *ngIf="company" class="login-form-forgot" title="" target="_blank"
+                                                                                                   href="{{storage_link+company.doc_official}}">Consulter le fichier</a>
+          <nz-form-control>
+            <nz-input-group>
+              <input type="file" nz-input formControlName="doc_official_file" (change)="handleFileUpload($event,'doc_official')"/>
+            </nz-input-group>
+          </nz-form-control>
+        </div>
+
+        <div class="col-md-6">
+          <nz-form-label nzFor="email">Email professionnel</nz-form-label>
+          <nz-form-control>
+            <nz-input-group>
+              <input type="email" nz-input formControlName="email"/>
+            </nz-input-group>
+          </nz-form-control>
+        </div>
+
+        <div class="col-md-6">
+          <nz-form-label nzFor="contact">Téléphone</nz-form-label>
+          <nz-form-control>
+            <nz-input-group>
+              <input type="number" nz-input formControlName="contact" placeholder="22997000000"/>
+            </nz-input-group>
+          </nz-form-control>
+        </div>
+
+        <div class="col-md-6">
+          <nz-form-label nzFor="country_id">Pays</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="country_id">
+              <nz-option *ngFor="let item of countries" nzValue="{{item.id}}" nzLabel="{{item.name}}"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </div>
+
+
+        <div class="col-md-6">
+          <nz-form-label nzFor="linkedin">LinkedIn</nz-form-label>
+          <nz-form-control>
+            <nz-input-group>
+              <input type="text" nz-input formControlName="linkedin"/>
+            </nz-input-group>
+          </nz-form-control>
+        </div>
+
+        <div class="col-md-6">
+          <nz-form-label nzFor="web_site">Site web</nz-form-label>
+          <nz-form-control>
+            <nz-input-group>
+              <input type="text" nz-input formControlName="web_site"/>
+            </nz-input-group>
+          </nz-form-control>
+        </div>
+
+        <div class="col-md-6">
+          <nz-form-label nzFor="fb_page">Facebook</nz-form-label>
+          <nz-form-control>
+            <nz-input-group>
+              <input type="text" nz-input formControlName="fb_page"/>
+            </nz-input-group>
+          </nz-form-control>
+        </div>
+
+
+        <div class="text-center mt-4">
+          <button nz-button class="login-form-button login-form-margin col-md-4 mt-3 " [disabled]="!validateForm.valid"
+                  [nzType]="'primary'">
+            Mettre à jour
+          </button>
+        </div>
+      </div>
+    </form>
+  </nz-spin>
+</div>

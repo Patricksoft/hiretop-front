@@ -1,0 +1,169 @@
+<div class="col-md-12">
+  <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning">
+
+    <div class="col-md-12 text-right">
+      <button nz-button nzType="primary" [nzSize]="size" nzShape="round" (click)="isModalSave=true">
+        <span nz-icon nzType="message" nzTheme="outline"></span>
+        Nouvelle discussion
+      </button>
+    </div>
+
+    <nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720"
+               [nzVisible]="isModalSave" nzTitle="{{modalTitle}}"
+               (nzOnClose)="closeModal()">
+      <form nz-form *nzDrawerContent [formGroup]="validateForm" (submit)="submitForm()">
+        <div style="text-align: left" class="row">
+
+          <div class="col-md-12" *ngIf="users">
+            <nz-form-label nzFor="user_id">Sélectionnez un talent</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="user_id">
+                <nz-option *ngFor="let item of users" nzValue="{{item.id}}"
+                           nzLabel="{{item.identity.firstname}} {{item.identity.lastname}} "></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </div>
+          <div class="mt-4">
+            <button nz-button class="login-form-button login-form-margin col-md-4"
+                    [disabled]="!validateForm.valid"
+                    [nzType]="'primary'" style="margin-right: 2%">
+              Créer cette disccussion
+            </button>
+          </div>
+        </div>
+      </form>
+    </nz-drawer>
+
+    <h5 class="mt-4">Liste des discussions</h5>
+
+
+    <div class="row">
+      <div class="col-md-4" style="border-right: 1px solid grey; height: 100vh; overflow-x: auto">
+        <nz-list class="demo-loadmore-list">
+          <nz-list-item *ngFor="let item of discussions"
+                        style="cursor: pointer;">
+
+            <ng-container *ngIf="helperServiceFront.user()['type']=='talent'">
+
+              <img src="{{storage_link+item.company.logo}}" alt="" width="60"
+                   style="margin-right: 10px; border-radius: 50%">
+              <nz-list-item-meta
+                nzDescription="{{ item.company.name }} "
+                (click)="showDetail(item)"
+              >
+                <nz-list-item-meta-title>
+                  <nz-ribbon nzText="{{selected_discussion.count_msg_unread_user}}"
+                             *ngIf="selected_discussion.count_msg_unread_user>0">
+                    <a href="javascript:void(0)"
+                       class="text-primary">{{ item.company.email }}</a>
+                    <br> Crée le : {{item.created_at | date:'d/M/Y à HH:mm'}}
+                  </nz-ribbon>
+                <span  *ngIf="selected_discussion.count_msg_unread_user==0" >
+                    <a *ngIf="selected_discussion.count_msg_unread_user==0" href="javascript:void(0)"
+                       class="text-primary">{{ item.company.email }}</a>
+                  <br> Crée le : {{item.created_at | date:'d/M/Y à HH:mm'}}
+                </span>
+
+                </nz-list-item-meta-title>
+              </nz-list-item-meta>
+
+            </ng-container>
+            <ng-container *ngIf="helperServiceFront.user()['type']=='company'">
+
+              <img src="assets/user-icon.png" alt="" width="60"
+                   style="margin-right: 10px; border-radius: 50%">
+              <nz-list-item-meta
+                nzDescription="{{ item.user.identity.firstname }} {{ item.user.identity.lastname }}"
+                (click)="showDetail(item)"
+              >
+                <nz-list-item-meta-title>
+                  <nz-ribbon nzText="{{selected_discussion.count_msg_unread_company}}"
+                             *ngIf="selected_discussion.count_msg_unread_company>0">
+                    <a href="javascript:void(0)"
+                       class="text-primary">{{ item.user.identity.email }}</a>
+                    <br> Crée le : {{item.created_at | date:'d/M/Y à HH:mm'}}
+                  </nz-ribbon>
+                  <span *ngIf="selected_discussion.count_msg_unread_company==0">
+                     <a href="javascript:void(0)"
+                        class="text-primary">{{ item.user.identity.email }}</a>
+                  <br> Crée le : {{item.created_at | date:'d/M/Y à HH:mm'}}
+                  </span>
+
+
+                </nz-list-item-meta-title>
+              </nz-list-item-meta>
+
+            </ng-container>
+
+            <nz-skeleton
+              *ngIf="item.loading"
+              [nzActive]="true"
+              [nzTitle]="false"
+              [nzLoading]="true"
+            ></nz-skeleton>
+          </nz-list-item>
+
+        </nz-list>
+      </div>
+      <div class="col-md-8" style="height: 100vh;">
+        <div *ngIf="messages" style="height: 50vh; overflow-x: auto">
+          <div class="row" *ngFor="let item of messages">
+            <nz-comment nzAuthor="{{item.user.identity.firstname}} {{item.user.identity.lastname}} "
+                        *ngIf="item.user.type=='talent'">
+
+              <nz-avatar
+                nz-comment-avatar
+                nzIcon="user"
+                nzSrc="assets/user-icon.png"
+              ></nz-avatar>
+              <nz-comment-content>
+                <p>
+                  {{item.msg}}
+                </p>
+              </nz-comment-content>
+
+            </nz-comment>
+            <nz-comment nzAuthor="{{item.user.company.name}}" *ngIf="item.user.type=='company'">
+              <!--<img src="{{storage_link+item.user.company.logo}}" alt="" width="40"
+                   style="margin-right: 10px; border-radius: 50%">-->
+              <nz-avatar
+                nz-comment-avatar
+                nzIcon="user"
+                nzSrc="{{storage_link+item.user.company.logo}}"
+              ></nz-avatar>
+              <nz-comment-content>
+                <p>
+                  {{item.msg}}
+                </p>
+              </nz-comment-content>
+
+            </nz-comment>
+
+          </div>
+
+        </div>
+        <form nz-form [formGroup]="validateDiscussionForm" (submit)="submitMsgForm()">
+          <nz-comment>
+            <nz-avatar *ngIf="helperServiceFront.user()['type']=='company'" nz-comment-avatar nzIcon="user"
+                       nzSrc="{{storage_link+helperServiceFront.user().company.logo}}"></nz-avatar>
+            <nz-avatar *ngIf="helperServiceFront.user()['type']=='talent'" nz-comment-avatar nzIcon="user"
+                       nzSrc="assets/user-icon.png"></nz-avatar>
+            <nz-comment-content>
+              <nz-form-item>
+                <textarea formControlName="msg" nz-input rows="4"></textarea>
+              </nz-form-item>
+              <nz-form-item>
+                <button nz-button nzType="primary" [disabled]="!validateDiscussionForm.valid">
+                  Envoyer
+                </button>
+              </nz-form-item>
+            </nz-comment-content>
+          </nz-comment>
+        </form>
+
+      </div>
+    </div>
+
+
+  </nz-spin>
+</div>

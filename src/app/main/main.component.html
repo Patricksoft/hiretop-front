@@ -1,0 +1,89 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar"
+            nzCollapsible
+            nzWidth="256px"
+            nzBreakpoint="md"
+            [(nzCollapsed)]="isCollapsed"
+            [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <a href="/" target="_blank">
+        <img src="assets/logo-icon.png" alt="logo">
+        <h1>HireTop</h1>
+      </a>
+    </div>
+    <container-element [ngSwitch]="helperServiceFront.user()['type']">
+
+      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed" *ngSwitchCase="'talent'">
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/dashboard-talent">Tableau de board</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a [routerLink]="['/apply-offers']">Offres d'emploi</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a [routerLink]="['/talent-offer-applies']">Suivre mes candidatures</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/discussions" >Discussions</a>
+        </li>
+
+        <li nz-menu-item nzMatchRouter>
+          <a [routerLink]="['/info-talent']" [queryParams]="{ tab: 'one' }" queryParamsHandling="merge">Profil Personnel</a>
+        </li>
+
+
+      </ul>
+
+      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed" *ngSwitchCase="'company'">
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/dashboard-company">Tableau de board</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/company-offers" >Offres d'Emploi</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/discussions" >Discussions</a>
+        </li>
+
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/info-company" [queryParams]="{ tab: 'one' }" queryParamsHandling="merge" >Mon entreprise</a>
+        </li>
+
+      </ul>
+
+    </container-element>
+
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <span class="trigger"
+                  nz-icon
+                  [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            ></span>
+        </span>
+        <div style="float : right; color: #109F81;" >
+
+          <nz-page-header-title class="title " style="margin-top: 10px;" >{{helperServiceFront.user()["name"]}}</nz-page-header-title>
+          <a nz-dropdown [nzDropdownMenu]="menu">
+            <img src="assets/user-icon.png" height="50px" alt="user">
+          </a>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item nzDisabled>{{helperServiceFront.user()["name"]}}</li>
+              <li nz-menu-item (click)="logout()" >Déconnexion</li>
+            </ul>
+          </nz-dropdown-menu>
+        </div>
+
+
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content" style="overflow-y: auto">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

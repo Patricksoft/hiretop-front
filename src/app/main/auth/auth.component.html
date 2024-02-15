@@ -1,0 +1,45 @@
+<div style="width: 100%">
+  <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning">
+    <div class="row">
+      <div class="col-md-7">
+        <img src="assets/back.jpg" alt="" style="height: 100vh; width: 100%">
+      </div>
+      <div class="col-md-5 p-5">
+        <form nz-form class="login-form text-center" [formGroup]="validateForm" (submit)="submitForm()">
+          <img src="assets/hiretop-logo.png" alt="logo-hiretop" width="150">
+          <h5>Veuillez entrer vos identifiants </h5>
+          <br>
+          <div style="text-align: left" class="">
+            <nz-form-label nzFor="username">Nom d'utilisateur</nz-form-label>
+            <nz-form-control nzErrorTip="Le nom d'utilisateur est obligatoire !">
+              <nz-input-group >
+                <input type="text" nz-input ngModel formControlName="username"/>
+              </nz-input-group>
+            </nz-form-control>
+
+            <nz-form-label nzFor="password">Mot de passe</nz-form-label>
+            <nz-form-control nzErrorTip="Le mot de passe est obligatoire !">
+              <nz-input-group>
+                <input type="password" nz-input formControlName="password" />
+              </nz-input-group>
+            </nz-form-control>
+
+            <div class="mt-4">
+              <a class="login-form-forgot" title="Veuillez contacter le service IT.">Mot de passe oublié ?</a>
+            </div>
+
+            <button nz-button class="login-form-button login-form-margin col-md-6 mt-2" [disabled]="!validateForm.valid"
+                    [nzType]="'primary'">
+              Se Connecter
+            </button>
+
+            <div class="text-center mt-5">
+              <a [routerLink]="['/register']"  class="login-form-forgot" title="">Je créé un compte talent / entreprise </a>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </nz-spin>
+</div>

@@ -1,0 +1,37 @@
+<div>
+  <nz-tabset nzLinkRouter>
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'one' }" queryParamsHandling="merge">
+        Informations personnelles
+      </a>
+      <app-info-account></app-info-account>
+    </nz-tab>
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'two' }" queryParamsHandling="merge">
+        Diplômes
+      </a>
+      <app-user-degree></app-user-degree>
+    </nz-tab>
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'three' }" queryParamsHandling="merge">
+        Expériences pro
+      </a>
+      <app-experience-pro></app-experience-pro>
+
+    </nz-tab>
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'four' }" queryParamsHandling="merge">
+        Compétences
+      </a>
+      <app-skill></app-skill>
+
+    </nz-tab>
+
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'five' }" queryParamsHandling="merge">
+        Configuration
+      </a>
+      <app-setting-filter></app-setting-filter>
+    </nz-tab>
+  </nz-tabset>
+</div>

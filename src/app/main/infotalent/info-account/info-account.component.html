@@ -1,0 +1,106 @@
+<div class="col-md-12">
+  <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning"	>
+  <form nz-form class="login-form text-center" [formGroup]="validateForm" (submit)="submitForm()">
+    <div style="text-align: left" class="row">
+      <div class="col-md-6">
+        <nz-form-label nzFor="firstname">Prénoms</nz-form-label>
+        <nz-form-control>
+          <nz-input-group>
+            <input type="text" nz-input  formControlName="firstname"/>
+          </nz-input-group>
+        </nz-form-control>
+      </div>
+      <div class="col-md-6">
+        <nz-form-label nzFor="lastname">Nom</nz-form-label>
+        <nz-form-control>
+          <nz-input-group>
+            <input type="text" nz-input  formControlName="lastname"/>
+          </nz-input-group>
+        </nz-form-control>
+      </div>
+      <div class="col-md-6">
+        <nz-form-label nzFor="email">Email professionnel</nz-form-label>
+        <nz-form-control>
+          <nz-input-group>
+            <input type="email" nz-input  formControlName="email"/>
+          </nz-input-group>
+        </nz-form-control>
+      </div>
+      <div class="col-md-6">
+        <nz-form-label nzFor="phone">Téléphone</nz-form-label>
+        <nz-form-control>
+          <nz-input-group>
+            <input type="number" nz-input  formControlName="phone" placeholder="22997000000"/>
+          </nz-input-group>
+        </nz-form-control>
+      </div>
+      <div class="col-md-6">
+        <nz-form-label nzFor="birthday">Date de naissance</nz-form-label>
+        <nz-form-control>
+          <nz-input-group>
+            <input type="date" nz-input  formControlName="birthday"/>
+          </nz-input-group>
+        </nz-form-control>
+      </div>
+      <div class="col-md-6">
+        <nz-form-label nzFor="marital_status">Situation matrimoniale</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="marital_status">
+            <nz-option nzValue="single" nzLabel="Célibataire"></nz-option>
+            <nz-option nzValue="married" nzLabel="Marié(e)"></nz-option>
+            <nz-option nzValue="widowed" nzLabel="Veuf / veuve"></nz-option>
+            <nz-option nzValue="divorced" nzLabel="Divorcé(e)"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </div>
+      <div class="col-md-6">
+        <nz-form-label nzFor="country_id">Pays</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="country_id">
+            <nz-option *ngFor="let item of countries" nzValue="{{item.id}}" nzLabel="{{item.name}}"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </div>
+
+      <div class="col-md-6">
+        <nz-form-label nzFor="address">Addresse</nz-form-label>
+        <nz-form-control>
+          <nz-input-group>
+            <input type="text" nz-input  formControlName="address"/>
+          </nz-input-group>
+        </nz-form-control>
+      </div>
+
+
+      <div class="col-md-6">
+        <nz-form-label nzFor="cv">CV</nz-form-label>
+        <nz-form-control>
+          <nz-input-group>
+            <input type="file" nz-input  formControlName="cv_file" (change)="handleFileUpload($event)" />
+            <a *ngIf="identity" class="login-form-forgot" title="" target="_blank" href="{{storage_link+identity.cv}}">Consulter le fichier</a>
+          </nz-input-group>
+        </nz-form-control>
+      </div>
+
+
+      <div class="col-md-6">
+        <nz-form-label nzFor="linkedin">LinkedIn</nz-form-label>
+        <nz-form-control>
+          <nz-input-group>
+            <input type="text" nz-input  formControlName="linkedin"/>
+          </nz-input-group>
+        </nz-form-control>
+      </div>
+
+
+
+      <div class="text-center mt-4">
+        <button nz-button class="login-form-button login-form-margin col-md-4 mt-3 " [disabled]="!validateForm.valid"
+                [nzType]="'primary'">
+          Mettre à jour
+        </button>
+      </div>
+    </div>
+  </form>
+  </nz-spin>
+</div>

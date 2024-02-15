@@ -1,0 +1,115 @@
+<div class="col-md-12" >
+  <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning">
+    <div class="col-12" style="text-align: right">
+      <button nz-button nzType="primary" nzShape="circle" (click)="this.isModalSave=true;initForm();">
+        <span nz-icon nzType="plus" nzTheme="outline"></span>
+      </button>
+      <nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720"
+                 [nzVisible]="isModalSave" nzTitle="{{modalTitle}}"
+                 (nzOnClose)="closeModal()">
+        <form nz-form *nzDrawerContent [formGroup]="validateForm" (submit)="submitForm()">
+            <div style="text-align: left" class="row">
+              <div class="col-md-12">
+                <nz-form-label nzFor="intitule">Intitulé du diplôme</nz-form-label>
+                <nz-form-control>
+                  <nz-input-group>
+                    <input type="text" nz-input formControlName="intitule"/>
+                  </nz-input-group>
+                </nz-form-control>
+              </div>
+              <div class="col-md-12">
+                <nz-form-label nzFor="school">Ecole</nz-form-label>
+                <nz-form-control>
+                  <nz-input-group>
+                    <input type="text" nz-input formControlName="school"/>
+                  </nz-input-group>
+                </nz-form-control>
+              </div>
+              <div class="col-md-12">
+                <nz-form-label nzFor="begin">Date de début</nz-form-label>
+                <nz-form-control>
+                  <nz-input-group>
+                    <input type="date" nz-input formControlName="begin"/>
+                  </nz-input-group>
+                </nz-form-control>
+              </div>
+              <div class="col-md-12">
+                <nz-form-label nzFor="end">Date de fin</nz-form-label>
+                <nz-form-control>
+                  <nz-input-group>
+                    <input type="date" nz-input formControlName="end"/>
+                  </nz-input-group>
+                </nz-form-control>
+              </div>
+
+              <div class="col-md-12">
+                <nz-form-label nzFor="degree_id">Diplôme</nz-form-label>
+                <nz-form-control>
+                  <nz-select formControlName="degree_id">
+                    <nz-option *ngFor="let item of degrees" nzValue="{{item.id}}" nzLabel="{{item.name}}"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </div>
+
+              <div class="col-md-12">
+                <nz-form-label nzFor="sector_id">Secteur</nz-form-label>
+                <nz-form-control>
+                  <nz-select formControlName="sector_id">
+                    <nz-option *ngFor="let item of sectors" nzValue="{{item.id}}" nzLabel="{{item.name}}"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </div>
+
+            </div>
+            <div class="mt-4">
+              <button nz-button class="login-form-button login-form-margin col-md-4"
+                      [disabled]="!validateForm.valid"
+                      [nzType]="'primary'" style="margin-right: 2%">
+                Enregistrer
+              </button>
+            </div>
+        </form>
+       <!-- <ng-template #footerTpl>
+          <div style="text-align: right">
+            <button nz-button nzType="primary" (click)="closeModal()">Fermer</button>
+          </div>
+        </ng-template>-->
+      </nz-drawer>
+    </div>
+
+
+    <div>
+      <nz-list class="demo-loadmore-list">
+        <nz-list-item *ngFor="let item of user_degrees">
+          <ng-container>
+            <nz-list-item-meta
+              nzDescription="{{ item.begin }} à {{ item.end }}"
+            >
+              <nz-list-item-meta-title>
+                <a href="javascript:void(0)" class="text-primary">{{ item.degree.name }}</a> <br>
+                <a href="javascript:void(0)">{{ item.intitule }}, {{ item.school }}, {{ item.sector.name }}</a>
+              </nz-list-item-meta-title>
+            </nz-list-item-meta>
+            <ul nz-list-item-actions>
+              <nz-list-item-action><a href="javascript:void(0)" (click)="editUserDegree(item)">
+                <span nz-icon nzType="edit" nzTheme="outline"></span>
+              </a></nz-list-item-action>
+              <nz-list-item-action><a href="javascript:void(0)" (click)="deleteUserDegree(item)">
+                <span nz-icon nzType="delete" nzTheme="outline"></span>
+              </a></nz-list-item-action>
+            </ul>
+          </ng-container>
+
+          <nz-skeleton
+            *ngIf="item.loading"
+            [nzActive]="true"
+            [nzTitle]="false"
+            [nzLoading]="true"
+          ></nz-skeleton>
+        </nz-list-item>
+
+      </nz-list>
+    </div>
+
+  </nz-spin>
+</div>
