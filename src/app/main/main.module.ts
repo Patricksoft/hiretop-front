@@ -100,6 +100,9 @@ import {DiscussionComponent} from "./discussion/discussion.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {DashboardCompanyComponent} from "./dashboard-company/dashboard-company.component";
 
+import {ChartModule} from 'primeng/chart';
+import { GalleriaModule } from 'primeng/galleria';
+
 
 @NgModule({
   declarations: [
@@ -216,7 +219,9 @@ import {DashboardCompanyComponent} from "./dashboard-company/dashboard-company.c
     NzTableModule,
     NzFormModule,
     NzButtonModule,
-    EditorModule
+    EditorModule,
+    ChartModule,
+    GalleriaModule
   ]
 })
 export class MainModule { }

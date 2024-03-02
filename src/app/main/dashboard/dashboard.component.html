@@ -2,65 +2,50 @@
   <nz-spin nzTip="Veuillez patienter..." [nzSpinning]="isSpinning">
     <h4>Tableau de bord</h4>
 
-    <div *ngIf="statistics">
-      <div style="background: #ECECEC;padding:10px;">
-        <div class="row" >
-          <div class="col-md-4">
-            <nz-card nzTitle="Nombre de candidature">
-              <span class="title-count">{{statistics.count_applies}}</span>
-            </nz-card>
-          </div>
-          <div class="col-md-4">
-            <nz-card nzTitle="Nombre de candidature préselectionnée">
-              <span class="title-count">{{statistics.count_applies_preselection}}</span>
-            </nz-card>
-          </div>
-          <div class="col-md-4">
-            <nz-card nzTitle="Nombre de candidature finalisée">
-              <span class="title-count">{{statistics.count_applies_finalise}}</span>
-            </nz-card>
-          </div>
+    <nz-carousel [nzEffect]="'fade'">
+      <div nz-carousel-content *ngFor="let item of array">
+        <img src="{{item}}" alt="" style="width:100%">
+        </div>
+    </nz-carousel>
 
+
+    <hr>
+
+    <div *ngIf="statistics">
+      <div style="padding:10px;">
+        <div class="row" >
+          <div class="col-md-12">
+            <p-chart type="line" [data]="data3" [options]="options3"></p-chart>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <p-chart type="bar" [data]="data4" [options]="options4"></p-chart>
+        </div>
+
+        <hr>
+        <div class="row" >
+          <div class="col-md-12">
+            <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+          </div>
         </div>
 
       </div>
+      <hr>
       <div class="row mt-4">
-        <h5>Les compétences les plus demandées sur HireTop</h5>
-        <nz-table #basicTable [nzData]="statistics.skills" class="mt-2">
-          <thead>
-          <tr>
-            <th>Compétences</th>
-            <th>Nombre de fois</th>
-            <th>Aide</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let data of basicTable.data">
-            <td style="font-weight: bold; color: #001529">{{ data.name }}</td>
-            <td>{{ data.offer_skills_count }}</td>
-            <td>
-              <a href="#">Suivre un cours</a>
-            </td>
-          </tr>
-          </tbody>
-        </nz-table>
-      </div>
-      <div class="row mt-4">
-        <h5>Nombre d'offre relié à mes compétences sur HireTop</h5>
-        <nz-table   class="mt-2">
-          <thead>
-          <tr>
-            <th>Compétences</th>
-            <th>Nombre de fois</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let data of statistics.user_skills">
-            <td style="font-weight: bold; color: #001529">{{data.skill.name}}</td>
-            <td>{{data.skill.offer_skills.length}}</td>
-          </tr>
-          </tbody>
-        </nz-table>
+        <div class="row">
+          <div class="col-md-6">
+            <h6>Les compétences les plus demandées sur HireTop</h6>
+            <p-chart type="pie" [data]="data" [options]="options"></p-chart>
+          </div>
+          <div class="col-md-6">
+            <h6>Nombre d'offre relié à mes compétences sur HireTop</h6>
+            <p-chart type="pie" [data]="data2" [options]="options2"></p-chart>
+          </div>
+
+        </div>
       </div>
     </div>
 

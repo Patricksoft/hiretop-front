@@ -18,8 +18,8 @@ in this location `src/environments/environment.ts`
 Set the right values
 `
 production: false,
-baseUrl: 'http://127.0.0.1:8000/api/',
-publicUrl: 'http://127.0.0.1:8000/',
+baseUrl: 'https://hiretopbackend.kyubisarl.com/api/',
+publicUrl: 'https://hiretopbackend.kyubisarl.com/',
 client_id: 2,
 client_secret: 'EcPJDSRmyssflOrs9dz6TbApyD73gxnQMUY62MSY'`
 

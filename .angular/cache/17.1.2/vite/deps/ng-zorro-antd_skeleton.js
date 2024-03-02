@@ -1,12 +1,12 @@
 import {
   InputBoolean,
   toCssPixel
-} from "./chunk-BGFQYVOV.js";
+} from "./chunk-QLL3KB3M.js";
 import {
   NgForOf,
   NgIf,
   NgStyle
-} from "./chunk-XEMLBLQE.js";
+} from "./chunk-OFMAFX5R.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -37,13 +37,13 @@ import {
   ɵɵproperty,
   ɵɵstyleProp,
   ɵɵtemplate
-} from "./chunk-LKJUCJSS.js";
+} from "./chunk-BIHFHHJE.js";
 import {
   __decorate
 } from "./chunk-JKR55PDT.js";
 import {
   __spreadValues
-} from "./chunk-J4B6MK7R.js";
+} from "./chunk-ASLTLD6L.js";
 
 // node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-skeleton.mjs
 var _c0 = ["nzType", "button"];
